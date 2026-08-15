@@ -11,9 +11,7 @@ The initial configuration consists of two types of star polymers, provided in th
 - `moleculeA.data`
 - `moleculeB.data`
 
-These files contain star polymers with different end-group functionalities that can react via click chemistry.
-
-Each star polymer consists of:
+Each star polymer contains:
 
 - 1 central bead
 - 4 polymer arms
@@ -21,19 +19,11 @@ Each star polymer consists of:
 
 For every simulation, 75 stars of each functionality were placed at random positions within the simulation box, resulting in a total of 150 star polymers.
 
-## Molecular Architecture and Atom Types
+## Atom Types
 
-The two molecule templates, `moleculeA.data` and `moleculeB.data`, describe four-arm star polymers with identical architectures but different terminal functionalities.
-
-Each star consists of:
-
-- One central bead (atom type **1**).
-- Four arms containing **26 beads per arm** (excluding the central bead).
-- Backbone beads represented by atom type **6**.
+Both molecule templates have the same molecular architecture but differ in their terminal functional groups.
 
 ### moleculeA.data
-
-For molecule A, the atom types have the following meaning:
 
 | Atom type | Description |
 |-----------|-------------|
@@ -51,30 +41,39 @@ In the visualizations presented in the manuscript:
 
 ### moleculeB.data
 
-`moleculeB.data` has the same architecture and atom-type definitions as `moleculeA.data`, with one exception:
+`moleculeB.data` is identical to `moleculeA.data`, except that the terminal functional group has atom type **3** instead of atom type **2**.
 
-- The terminal functional group is atom type **3** instead of atom type **2**.
+### Crosslink Formation
 
-### Click Reaction
-
-Network formation occurs through reactions between complementary end groups on molecules A and B. When a successful click reaction takes place, the reacting terminal beads are converted into atom type **4**, representing a formed crosslink between two star polymers.
-
-This atom-type conversion is used throughout the simulations to identify reacted and unreacted chain ends and to monitor network formation.
+Complementary end groups (types **2** and **3**) react during the click-chemistry protocol. Upon successful bond formation, the reacting end groups are converted to atom type **4**, representing a permanent crosslink between two star polymers.
 
 ## Gelation Protocol
 
-Network formation is achieved through click-chemistry reactions between complementary end groups. The simulation protocol used to generate the gel closely follows the methodology described in:
+The simulation protocol used to generate the gel closely follows:
 
-> Chiara Raffaelli; Wouter G. Ellenbroek, *Soft Matter* **17** (45), 10254-10262 (2021).
+> C. Raffaelli and W. G. Ellenbroek, *Soft Matter* **17**, 10254-10262 (2021).
 
 Minor implementation details and simulation parameters specific to the present study are provided in the input scripts contained in this directory.
 
 ## Contents
 
-- `moleculeA.data` – Star polymer with functionality A.
-- `moleculeB.data` – Star polymer with functionality B.
+- `moleculeA.data` – Star polymer with terminal group type 2.
+- `moleculeB.data` – Star polymer with terminal group type 3.
 - `lmp_stars.in` – LAMMPS input file used for network formation.
 
 ## Output
 
-Executing the scripts in this folder generates independent crosslinked polymer networks that serve as the initial configurations for the subsequent stages of the simulation workflow.
+Executing the scripts in this folder generates three types of output files:
+
+### Crosslink files
+
+These files record the progress of the gelation process by tracking the number of click reactions formed as a function of simulation time. They can be used to monitor the kinetics of network formation and the final extent of reaction.
+
+### Data files
+
+The generated LAMMPS data files contain the complete network topology at the end of the gelation simulation. These files can be analyzed to determine structural properties of the network, such as connectivity and percolation.
+
+### Restart files
+
+LAMMPS restart files are written at the end of the simulation and serve as the starting point for the subsequent stages of the simulation workflow. These files preserve the complete system state, including particle positions, velocities, and network topology.
+
