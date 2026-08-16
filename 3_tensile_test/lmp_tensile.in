@@ -116,7 +116,6 @@ fix extra all print 5000000 '${r} ${r3} ${r4} ${t}' file output/bond_info.reacte
 
 
 
-# run 200000000
 run 100000000
 #write_restart final_snapshot_after_equilibration_${num}.restart
 write_data data_${num}.polymer
