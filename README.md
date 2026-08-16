@@ -246,6 +246,47 @@ data/
         ├── data_1.polymer
         ├── data_2.polymer
         └── ...
+```
+
+### Analysis Performed
+
+The notebook generates a two-panel figure describing the network both immediately after gelation and after the relaxation stage.
+
+#### Panel (a): Click-Chemistry Gelation
+
+The crosslink files generated during network formation are used to compute:
+
+- The average number of click reactions as a function of time.
+- The standard error of the mean over all independent realizations.
+- The final extent of reaction.
+
+The final network topologies are subsequently analyzed to determine:
+
+- The probability of percolation.
+- The average number of degree-three nodes.
+- The average number of local seven-membered rings.
+
+#### Panel (b): Network Relaxation
+
+The `bond_info` files generated during the reversible ring-opening simulations are analyzed to calculate the difference between ring-opening and ring-closing reactions as a function of time.
+
+The final relaxed network topologies are then used to determine:
+
+- The probability of percolation.
+- The average number of degree-three nodes.
+- The average number of local seven-membered rings.
+
+Percolation analysis is performed using the `perconet` package under periodic boundary conditions.
+
+### Output
+
+The notebook generates:
+
+```text
+Fig3_raw.svg
+```
+
+This figure summarizes the network formation process, the evolution of reversible reactions during relaxation, and the resulting structural properties of the network prior to tensile testing.
 
 ---
 
@@ -253,11 +294,11 @@ data/
 
 This notebook analyzes the tensile-test simulations performed in `3_tensile_test` and reproduces the main figures presented in the manuscript and supplementary information.
 
-The analysis combines reaction statistics (`bond_info` files) with the mechanical data (`.csv` files containing stress and box dimensions) generated during the creep simulations.
+The analysis combines reaction statistics (`bond_info` files) with mechanical data (`.csv` files containing stress and box dimensions) generated during the creep simulations.
 
 ### Required Folder Structure
 
-The notebook expects one directory for each target stress:
+The notebook expects one directory for each applied target stress:
 
 ```text
 data/
@@ -282,4 +323,116 @@ data/
 └── 0_02/
     ├── bond_info_c7/
     └── pressure/
+```
 
+Each `bond_info_c7` directory contains the reaction statistics generated during the tensile tests, while each `pressure` directory contains the corresponding stress and box-dimension data.
+
+### Analysis Performed
+
+For each applied stress, the notebook:
+
+- Averages results over independent realizations.
+- Computes standard errors of the mean.
+- Filters simulations that deviate significantly from the prescribed target stress.
+- Aligns all trajectories such that `t = 0` corresponds to the onset of the chemically driven creep phase.
+
+The following quantities are analyzed:
+
+- Number of ring-closing reactions.
+- Number of ring-opening reactions.
+- Difference between ring-closing and ring-opening reactions.
+- Number of locality-constrained (on-chain) reactions.
+- Number of unconstrained (off-chain) reactions.
+- Applied stress.
+- Evolution of the box length \(L_x\).
+- Creep strain.
+- Creep strain rate.
+
+### Main Figure
+
+The notebook first generates a nine-panel figure:
+
+```text
+reaction_analysis23.svg
+```
+
+The figure contains:
+
+- Ring-closing reactions as a function of time.
+- Ring-opening reactions as a function of time.
+- Net reaction balance.
+- Local and non-local reaction events.
+- Stress evolution.
+- Evolution of the box length \(L_x\).
+- Relation between elastic pre-deformation and applied stress.
+- Strain evolution during chemically driven creep.
+- Strain rate as a function of applied stress.
+
+The strain rate is obtained from a linear fit to the creep regime after the reactions are activated.
+
+The figure highlights the emergence of microscopic and macroscopic catch-bond behavior described in the manuscript.
+
+### Figure 5
+
+A second section of the notebook generates Figure 5:
+
+```text
+panels_a_b_vertical_bigger_font_noxtop.svg
+```
+
+This figure focuses on the reaction kinetics during tensile testing and contains:
+
+- Ring-closing reactions as a function of time.
+- Local and non-local reaction events as a function of time.
+
+### Figure 6
+
+A third section of the notebook generates Figure 6:
+
+```text
+boxlength_plus_strainrate_publication_style.svg
+```
+
+This figure contains:
+
+- Evolution of the simulation box length during creep.
+- Strain rate as a function of applied stress.
+
+The strain rate is extracted from the slope of the strain-time curves after the onset of chemically driven creep.
+
+### Supplementary Analysis: Ogden Fit
+
+The final section of the notebook performs a one-term Ogden fit to the elastic pre-deformation data.
+
+The deformation at the onset of the creep simulations is fitted using
+
+\[
+\Sigma = \mu \left(\Gamma^{\alpha} - \Gamma^{-\alpha/2}\right),
+\]
+
+where
+
+\[
+\Gamma = \frac{L_x}{L_x(-\infty)}
+\]
+
+is the stretch ratio and \(L_x(-\infty)\) is the equilibrium box length before deformation.
+
+The fitting procedure determines:
+
+- The Ogden modulus \(\mu\).
+- The Ogden exponent \(\alpha\).
+- The associated fitting uncertainties.
+
+### Output
+
+The notebook generates:
+
+```text
+reaction_analysis23.svg
+panels_a_b_vertical_bigger_font_noxtop.svg
+boxlength_plus_strainrate_publication_style.svg
+ogden_fit_small_text.svg
+```
+
+These figures characterize the coupling between reversible reactions, mechanical loading, and chemically driven creep across the investigated stress range.
