@@ -246,3 +246,40 @@ data/
         ├── data_1.polymer
         ├── data_2.polymer
         └── ...
+
+---
+
+## analysis_after_tensile_test.ipynb
+
+This notebook analyzes the tensile-test simulations performed in `3_tensile_test` and reproduces the main figures presented in the manuscript and supplementary information.
+
+The analysis combines reaction statistics (`bond_info` files) with the mechanical data (`.csv` files containing stress and box dimensions) generated during the creep simulations.
+
+### Required Folder Structure
+
+The notebook expects one directory for each target stress:
+
+```text
+data/
+├── 0_001/
+│   ├── bond_info_c7/
+│   └── pressure/
+├── 0_003/
+│   ├── bond_info_c7/
+│   └── pressure/
+├── 0_005/
+│   ├── bond_info_c7/
+│   └── pressure/
+├── 0_007/
+│   ├── bond_info_c7/
+│   └── pressure/
+├── 0_01/
+│   ├── bond_info_c7/
+│   └── pressure/
+├── 0_015/
+│   ├── bond_info_c7/
+│   └── pressure/
+└── 0_02/
+    ├── bond_info_c7/
+    └── pressure/
+
