@@ -77,3 +77,75 @@ The generated LAMMPS data files contain the complete network topology at the end
 
 LAMMPS restart files are written at the end of the simulation and serve as the starting point for the subsequent stages of the simulation workflow. These files preserve the complete system state, including particle positions, velocities, and network topology.
 
+
+# 2_relaxation_with_reactions
+
+This folder contains the code used to activate the reversible ring-opening reactions prior to the tensile test. During this stage, the initially formed network is allowed to relax while undergoing reversible bond exchange reactions.
+
+## Overview
+
+The simulations in this folder start from the crosslinked networks generated in `1_click_chemistry`. Reversible ring-opening reactions are activated, allowing the network topology to evolve and relax before mechanical loading.
+
+The implementation of the reactions relies on the LAMMPS REACTER package.
+
+## Files
+
+The folder contains the following files:
+
+- `lmp_relaxation.in` – Main LAMMPS input script used to perform the relaxation simulations.
+- `rxn_on.map` – Reaction mapping file for locality-constrained ("on-chain") reactions.
+- `rxn_off.map` – Reaction mapping file for unconstrained reactions.
+- `rxn_pre_on.data_template` – Topology template before a locality-constrained reaction.
+- `rxn_post_on.data_template` – Topology template after a locality-constrained reaction.
+- `rxn_pre_off.data_template` – Topology template before an unconstrained reaction.
+- `rxn_post_off.data_template` – Topology template after an unconstrained reaction.
+
+## Reaction Templates and Mapping Files
+
+The reaction mechanism is implemented using the REACTER package.
+
+### Mapping Files
+
+The `.map` files define the correspondence between atoms participating in a reaction. In particular, they identify the reactive groups and specify how atoms in the pre-reaction topology are mapped onto atoms in the post-reaction topology.
+
+Two reaction schemes are considered:
+
+- **On (`on`)**: locality-constrained reactions, referred to as *local reactions* in the manuscript.
+- **Off (`off`)**: reactions without a locality constraint.
+
+### Topology Templates
+
+The `.data_template` files define the molecular topology before and after a reaction event.
+
+- Files containing `pre` describe the topology before a reaction takes place.
+- Files containing `post` describe the topology after a reaction takes place.
+
+Separate template pairs are provided for locality-constrained (`on`) and unconstrained (`off`) reactions.
+
+## Output
+
+Executing the scripts in this folder generates three types of output files:
+
+### bond_info Files
+
+The `bond_info` files monitor the occurrence of reversible reactions throughout the simulation. The four columns represent:
+
+1. Number of locality-constrained (`on`) reactions.
+2. Number of unconstrained (`off`) reactions.
+3. Total number of reactions.
+4. Simulation time.
+
+These files can be used to quantify the evolution of the network topology during the relaxation process.
+
+### Data Files
+
+LAMMPS data files containing the final network topology after relaxation are generated. These files can be used for network analysis, including:
+
+- Percolation analysis.
+- Ring statistics.
+- Connectivity analysis.
+- Other structural characterization of the network.
+
+### Snapshot Files
+
+Snapshot files containing the relaxed network configurations are generated. These snapshots serve as the input for the final stage of the simulation protocol, namely the tensile tests.
