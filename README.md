@@ -149,3 +149,63 @@ LAMMPS data files containing the final network topology after relaxation are gen
 ### Snapshot Files
 
 Snapshot files containing the relaxed network configurations are generated. These snapshots serve as the input for the final stage of the simulation protocol, namely the tensile tests.
+
+
+# 3_tensile_test
+
+This folder contains the code used to perform the tensile tests on the relaxed polymer networks. The simulations start from the network configurations generated in `2_relaxation_with_reactions` and evaluate their mechanical response under uniaxial deformation.
+
+## Overview
+
+The tensile-test protocol consists of two consecutive phases:
+
+### 1. Elastic Pre-Deformation
+
+The network is deformed while all reversible ring-opening reactions are disabled. This stage probes the purely elastic response of the material and establishes the initial stress state prior to chemical adaptation.
+
+### 2. Chemically-Driven Creep
+
+After the initial deformation, the reversible ring-opening reactions are activated. The network is then allowed to evolve at fixed deformation, enabling stress relaxation through topology changes induced by the reaction mechanism.
+
+This two-step protocol separates the elastic response from the subsequent chemically driven restructuring of the network.
+
+## Files
+
+The folder contains:
+
+- `lmp_tensile.in` – Main LAMMPS input script used to perform the tensile-test simulations.
+- `rxn_on.map` – Reaction mapping file for locality-constrained ("on-chain") reactions.
+- `rxn_off.map` – Reaction mapping file for unconstrained reactions.
+- `rxn_pre_on.data_template` – Topology template before a locality-constrained reaction.
+- `rxn_post_on.data_template` – Topology template after a locality-constrained reaction.
+- `rxn_pre_off.data_template` – Topology template before an unconstrained reaction.
+- `rxn_post_off.data_template` – Topology template after an unconstrained reaction.
+
+The reaction files are identical in purpose to those described in `2_relaxation_with_reactions` and are used through the LAMMPS REACTER package to implement the reversible ring-opening reactions.
+
+## Output
+
+Executing the scripts in this folder generates the following output files.
+
+### bond_info Files
+
+The `bond_info` files track the occurrence of reversible reactions during the tensile test. The four columns correspond to:
+
+1. Number of locality-constrained (`on`) reactions.
+2. Number of unconstrained (`off`) reactions.
+3. Total number of reactions.
+4. Simulation time.
+
+These files can be used to quantify the extent of network rearrangement during deformation and creep.
+
+### Stress-Strain Data
+
+The simulations also generate `.csv` files containing five columns:
+
+1. Stress.
+2. \(L_x\) – Simulation box length in the x direction.
+3. \(L_y\) – Simulation box length in the y direction.
+4. \(L_z\) – Simulation box length in the z direction.
+5. \(L_x L_y L_z\) – Simulation box volume.
+
+These data can be used to analyze the mechanical response of the network, including elastic deformation, stress relaxation, and volume changes throughout the tensile-test protocol.
