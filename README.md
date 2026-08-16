@@ -209,3 +209,40 @@ The simulations also generate `.csv` files containing five columns:
 5. \(L_x L_y L_z\) – Simulation box volume.
 
 These data can be used to analyze the mechanical response of the network.
+
+
+# 4_analysis
+
+This folder contains the analysis scripts used to characterize the polymer networks and reproduce the figures presented in the manuscript. The scripts process the output generated during the click-chemistry, relaxation, and tensile-test stages of the simulation workflow.
+
+---
+
+## analysis_before_tensile_test.ipynb
+
+This notebook analyzes the network structure prior to the tensile tests and reproduces the corresponding figure presented in the manuscript. The analysis combines data from the network-formation stage (`1_click_chemistry`) and the network-relaxation stage (`2_relaxation_with_reactions`).
+
+### Required Folder Structure
+
+The notebook expects the following directory structure:
+
+```text
+data/
+├── step_1_formation_by_click_chemistry/
+│   ├── cross_links_c7/
+│   │   ├── crosslink_c7_s1.txt
+│   │   ├── crosslink_c7_s2.txt
+│   │   └── ...
+│   └── final_data_stars_c7/
+│       ├── datatarsnetwork_c7_s1.polymer
+│       ├── datatarsnetwork_c7_s2.polymer
+│       └── ...
+│
+└── step2_relaxation_ROP/
+    ├── 2bond_info_c7/
+    │   ├── bond_info.reacter1.txt
+    │   ├── bond_info.reacter2.txt
+    │   └── ...
+    └── 2final_data_stars_c7/
+        ├── data_1.polymer
+        ├── data_2.polymer
+        └── ...
