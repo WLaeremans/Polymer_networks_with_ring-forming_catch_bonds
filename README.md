@@ -263,7 +263,7 @@ The crosslink files generated during network formation are used to compute:
 The final network topologies are subsequently analyzed to determine:
 
 - The probability of percolation.
-- The average number of degree-three nodes.
+- The average number of rings.
 - The average number of local seven-membered rings.
 
 #### Panel (b): Network Relaxation
@@ -273,10 +273,29 @@ The `bond_info` files generated during the reversible ring-opening simulations a
 The final relaxed network topologies are then used to determine:
 
 - The probability of percolation.
-- The average number of degree-three nodes.
+- The average number of rings.
 - The average number of local seven-membered rings.
 
-Percolation analysis is performed using the `perconet` package under periodic boundary conditions.
+Network topology analysis is performed using the NetworkX package. Rings are identified from the cycle basis of the network graph.
+
+Percolation in all three spatial dimensions is determined using the PercoNet package under periodic boundary conditions.
+
+### Software Used
+
+The notebook uses the following Python packages for network analysis.
+
+**NetworkX**
+
+Aric A. Hagberg, Daniel A. Schult, and Pieter J. Swart,  
+*"Exploring network structure, dynamics, and function using NetworkX"*, in *Proceedings of the 7th Python in Science Conference (SciPy2008)*, Gäel Varoquaux, Travis Vaught, and Jarrod Millman (Eds.), Pasadena, CA, USA, pp. 11-15, 2008.
+
+**PercoNet**
+
+C. Raffaelli and W. G. Ellenbroek,  
+*PercoNet: A Python package for percolation and network analysis*,  
+https://perconet.readthedocs.io/ (2022).
+
+PercoNet is used to determine whether a network percolates across the simulation box in the x, y, and z directions, as well as whether it simultaneously percolates in all three spatial dimensions.
 
 ### Output
 
@@ -341,8 +360,8 @@ The following quantities are analyzed:
 - Number of ring-closing reactions.
 - Number of ring-opening reactions.
 - Difference between ring-closing and ring-opening reactions.
-- Number of locality-constrained (on-chain) reactions.
-- Number of unconstrained (off-chain) reactions.
+- Number of locality-constrained ("local") reactions.
+- Number of unconstrained ("non-local") reactions.
 - Applied stress.
 - Evolution of the box length \(L_x\).
 - Creep strain.
@@ -370,7 +389,7 @@ The figure contains:
 
 The strain rate is obtained from a linear fit to the creep regime after the reactions are activated.
 
-The figure highlights the emergence of microscopic and macroscopic catch-bond behavior described in the manuscript.
+The figure highlights the emergence catch bond behaviour described in the manuscript.
 
 ### Figure 5
 
