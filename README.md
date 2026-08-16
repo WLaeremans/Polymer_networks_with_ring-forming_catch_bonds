@@ -208,4 +208,4 @@ The simulations also generate `.csv` files containing five columns:
 4. \(L_z\) – Simulation box length in the z direction.
 5. \(L_x L_y L_z\) – Simulation box volume.
 
-These data can be used to analyze the mechanical response of the network, including elastic deformation, stress relaxation, and volume changes throughout the tensile-test protocol.
+These data can be used to analyze the mechanical response of the network.
