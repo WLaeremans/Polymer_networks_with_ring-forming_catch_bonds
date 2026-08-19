@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Laeremans"
+  given-names: "Wout"
+  orcid: "https://orcid.org/0000-0002-9252-3225"
+title: "WLaeremans/Polymer_networks_with_ring-forming_catch_bonds: polymer networks with ring-forming catch bonds - v1.0.0"
+version: v1.0.0
+doi: 10.5281/zenodo.22009645
+date-released: 2026-08-19
+url: "https://doi.org/10.5281/zenodo.22009645"
