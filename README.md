@@ -1,6 +1,6 @@
 Code used for preprint on arxiv: "Synthetic design of force-responsive hydrogels with ring-forming catch bonds", by Wout Laeremans and Wouter G. Ellenbroek.
 
-Archived on Zenodo: 10.5281/zenodo.22009645
+Archived on Zenodo: [10.5281/zenodo.22009645](https://doi.org/10.5281/zenodo.22009644)
 
 # 1_click_chemistry
 
